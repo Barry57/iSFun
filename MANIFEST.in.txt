@@ -1,4 +1,0 @@
-recursive-include iSFun/data *.pkl
-include iSFun/__init__.py
-include iSFun/LICENSE
-include iSFun/requirements
