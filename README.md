@@ -21,7 +21,7 @@ pip install iSFun
 ### Menu
 - [iscca](#iscca)
 - [iscca_cv](#iscca_cv)
-
+- 
 -
 -
 -
@@ -43,11 +43,44 @@ pip install iSFun
 -
 -
 #### iscca
-Integrative sparse canonical correlation analysis
+Integrative sparse canonical correlation analysis.
 ##### Description
 This function provides a penalty-based integrative sparse canonical correlation analysis method to handle the multiple datasets with high dimensions generated under similar protocols, which consists of two built-in penalty items for selecting the important variables for users to choose, and two contrasted penalty functions for eliminating the diffierence (magnitude or sign) between estimators within each group.
 ##### Usage
-iscca(x, y, L, mu1, mu2, mu3, mu4, eps = 1e-04, pen1 = "homogeneity",
-pen2 = "magnitude", scale.x = TRUE, scale.y = TRUE, maxstep = 50,
-submaxstep = 10, trace = FALSE, draw = FALSE)
-#####
+```c
+iscca(x, y, L, mu1, mu2, mu3, mu4, eps=1e-04, pen1="homogeneity", 
+          pen2="magnitude", scale_x=True, scale_y=True, maxstep=50, 
+          submaxstep=10, trace=False, draw=False):
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+|x|list of data matrices, L datasets of explanatory variables.|
+|y|list of data matrices, L datasets of dependent variables.|
+L|numeric, number of datasets.|
+mu1|numeric, sparsity penalty parameter for vector u.|
+mu2|numeric, contrasted penalty parameter for vector u.|
+mu3|numeric, sparsity penalty parameter for vector v.|
+mu4|numeric, contrasted penalty parameter for vector v.|
+eps|numeric, the threshold at which the algorithm terminates.|
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.|
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.|
+scale_x|character, "TRUE" or "FALSE", whether or not to scale the variables x. The default is TRUE.|
+scale_y|character, "TRUE" or "FALSE", whether or not to scale the variables y. The default is TRUE.|
+maxstep|numeric, maximum iteration steps. The default value is 50.|
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.|
+trace|character, "TRUE" or "FALSE". If TRUE, prints out its screening results of variables.|
+draw|character, "TRUE" or "FALSE". If TRUE, plot the convergence path of loadings and the heatmap of coefficient beta.|
+##### Value
+An 'iscca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is TRUE, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is TRUE, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- loading_x: the estimated canonical vector of variables x.
+- loading_y: the estimated canonical vector of variables y.
+- variable_x: the screening results of variables x.
+- variable_y: the screening results of variables y.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+
