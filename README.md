@@ -84,16 +84,16 @@ An 'iscca' object that contains the list of the following items.
 - meany: list of numeric vectors, column mean of the original datasets y.
 - normy: list of numeric vectors, column standard deviation of the original datasets y.
 ##### See Also
-See Also as [preview_cca](#preview_cca), [iscca_cv](#iscca_cv), [meta_scca](#meta_scca), scca[scca](#scca).
+See Also as [preview_cca](#preview_cca), [iscca_cv](#iscca_cv), [meta_scca](#meta_scca), [scca](#scca).
 ##### Examples
 ```c
 from isfun_data import cca_data
+from isfun import iscca
 x = cca_data()['x']
 y = cca_data()['y']
 L = len(x)
 mu1 = mu3 = 0.4
 mu2 = mu4 = 2.5
-
 res_homo_m = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
                    eps = 5e-2, maxstep = 50, submaxstep = 10, trace = True, draw = True)
 res_homo_s = iscca(x=x, y=y, L=L, mu1=mu1, mu2=mu2, mu3=mu3, mu4=mu4,
@@ -102,7 +102,6 @@ res_homo_s = iscca(x=x, y=y, L=L, mu1=mu1, mu2=mu2, mu3=mu3, mu4=mu4,
 
 mu1 = mu3 = 0.3
 mu2 = mu4 = 2
-
 res_hete_m = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
                     eps = 5e-2, pen1 = "heterogeneity", pen2 = "magnitude", scale_x = True,
                     scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
