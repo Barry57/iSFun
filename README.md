@@ -6,7 +6,7 @@ The implement of integrative analysis methods based on a two-part penalization, 
 (1) Fang, K., Fan, X., Zhang, Q., and Ma, S. (2018). Integrative sparse principal component analysis. Journal of Multivariate Analysis, <doi:10.1016/j.jmva.2018.02.002>. 
 (2) Liang, W., Ma, S., Zhang, Q., and Zhu, T. (2021). Integrative sparse partial least squares. Statistics in Medicine, <doi:10.1002/sim.8900>.
 ## Installation
-***Requirements:*** <br />
+### Requirements
 matplotlib==3.3.4<br />
 numpy==1.20.1<br />
 pandas==1.2.4<br />
@@ -14,10 +14,11 @@ scikit_learn==0.24.1<br />
 scipy==1.6.2<br />
 seaborn==0.11.1<br />
 setuptools==68.2.2<br />
+### Normal installation
 ```c
 pip install iSFun
 ```
-Or using mirror:
+### Mirror
 ```c
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple iSFun
 ```
