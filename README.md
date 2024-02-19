@@ -43,18 +43,27 @@ pip install iSFun
 Example data for users to apply the method iscca, iscca.cv, meta.scca or scca.
 ##### Format
 A dict contains two lists 'x' and 'y'.
+<br />
+<br />
+<br />
 #### pca_data
 *Example data for method ispca*
 ##### Description
 Example data for users to apply the method ispca, ispca.cv, meta.spca or spca.
 ##### Format
 A dict contains a list 'x'.
+<br />
+<br />
+<br />
 #### pls_data
 *Example data for method ispls*
 ##### Description
 Example data for users to apply the method ispls, ispls.cv, meta.spls or spls.
 ##### Format
 A dict contains two lists 'x' and 'y'.
+<br />
+<br />
+<br />
 #### iscca
 *Integrative sparse canonical correlation analysis*
 ##### Description
@@ -122,6 +131,9 @@ res_hete_s = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = m
                    eps = 5e-2, pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
                    scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
 ```
+<br />
+<br />
+<br />
 #### iscca_cv
 *Cross-validation for iscca*
 ##### Description
@@ -195,6 +207,9 @@ res_hete_s = iscca_cv(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 
                       eps = 1e-2, pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
                       scale_y = True, maxstep = 50, submaxstep = 10)
 ```
+<br />
+<br />
+<br />
 #### iscca_plot
 *Plot the results of iscca*
 ##### Description
@@ -228,6 +243,9 @@ res_homo_m = iscca(x=x, y=y, L=L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
 iscca_plot(x = res_homo_m, type = "path")
 iscca_plot(x = res_homo_m, type = "loading")
 ```
+<br />
+<br />
+<br />
 #### ispca
 *Integrative sparse principal component analysis*
 ##### Description
@@ -284,6 +302,9 @@ res_hete_s = ispca(x = x, L = L, mu1 = 0.1, mu2 = 0.05,
                    pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
                    maxstep = 50, submaxstep = 10, trace = False, draw = False)
 ```
+<br />
+<br />
+<br />
 #### ispca_cv
 *Cross-validation for ispca*
 ##### Description
@@ -344,6 +365,9 @@ res_hete_m = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "heterogeneity"
 res_hete_s = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "heterogeneity", K = 5,
                        pen2 = "sign", scale_x = True, maxstep = 50, submaxstep = 10)
 ```
+<br />
+<br />
+<br />
 #### ispca_plot
 *Plot the results of ispca*
 ##### Description
@@ -373,6 +397,9 @@ res_homo_m = ispca(x=x, L=L, mu1 = 0.5, mu2 = 0.002, trace = False, draw = False
 ispca_plot(x = res_homo_m, type = "path")
 ispca_plot(x = res_homo_m, type = "loading")
 ```
+<br />
+<br />
+<br />
 #### ispls
 *Integrative sparse partial least squares*
 ##### Description
@@ -439,6 +466,9 @@ res_hete_s = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
                    pen2 = "sign", scale_x = True, scale_y = True,
                    maxstep = 50, submaxstep = 10, trace = False, draw = False)
 ```
+<br />
+<br />
+<br />
 #### ispls_cv
 *Cross-validation for ispls*
 ##### Description
@@ -508,6 +538,9 @@ res_hete_s = ispls_cv(x = x, y = y, L = L, K = 5, mu1 = mu1, mu2 = mu2, eps = 1e
                       kappa = 0.05, pen1 = "heterogeneity", pen2 = "sign",
                       scale_x = True, scale_y = True, maxstep = 50, submaxstep = 10)
 ```
+<br />
+<br />
+<br />
 #### ispls_plot
 *Plot the results of ispls*
 ##### Description
@@ -540,6 +573,9 @@ ispls_plot(x = res_homo_m, type = "path")
 ispls_plot(x = res_homo_m, type = "loading")
 ispls_plot(x = res_homo_m, type = "heatmap")
 ```
+<br />
+<br />
+<br />
 #### meta_scca
 *Meta-analytic sparse canonical correlation analysis method in integrative study*
 ##### Description
@@ -589,6 +625,9 @@ mu1 = 0.08
 mu2 = 0.08
 res = meta_scca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, trace = True)
 ```
+<br />
+<br />
+<br />
 #### meta_spca
 *Meta-analytic sparse principal component analysis method in integrative study*
 ##### Description
@@ -629,6 +668,9 @@ L = len(x)
 
 res = meta_spca(x = x, L = L, mu1 = 0.5, trace = True)
 ```
+<br />
+<br />
+<br />
 #### meta_spls
 *Meta-analytic sparse partial least squares method in integrative study*
 ##### Description
@@ -673,6 +715,9 @@ L = len(x)
 
 res = meta_spls(x = x, y = y, L = L, mu1 = 0.03, trace = True)
 ```
+<br />
+<br />
+<br />
 #### preview_cca
 *Statistical description before using function iscca*
 ##### Description
@@ -711,7 +756,10 @@ L = len(x)
 
 prev_cca = preview_cca(x = x, y = y, L = L, scale_x = True, scale_y = True)
 ```
-#### meta_spca
+<br />
+<br />
+<br />
+#### preview_pca
 *Statistical description before using function ispca*
 ##### Description
 The function describes the basic statistical information of the data, including sample mean, sample co-variance of X and Y, the first eigenvector, eigenvalue and principal component, etc.
@@ -744,7 +792,10 @@ L = len(x)
 
 prev_pca = preview_pca(x = x, L = L, scale_x = True)
 ```
-#### meta_spls
+<br />
+<br />
+<br />
+#### preview_pls
 *Statistical description before using function ispls*
 ##### Description
 The function describes the basic statistical information of the data, including sample mean, sample variance of X and Y, the first direction of partial least squares method, etc.
@@ -781,6 +832,9 @@ L = len(x)
 
 prev_pls = preview_pls(x = x, y = y, L = L, scale_x = True, scale_y = True)
 ```
+<br />
+<br />
+<br />
 #### scca
 *Sparse canonical correlation analysis*
 ##### Description
@@ -826,6 +880,9 @@ y_scca = np.vstack(cca_data()['y'])
 res_scca = scca(x = x_scca, y = y_scca, mu1 = 0.1, mu2 = 0.1, eps = 1e-3,
                 scale_x = True, scale_y = True, maxstep = 50, trace = False)
 ```
+<br />
+<br />
+<br />
 #### spca
 *Sparse principal component analysis*
 ##### Description
@@ -864,6 +921,9 @@ x_spca = np.vstack(pca_data()['x'])
 res_spca = spca(x = x_spca, mu1 = 0.08, eps = 1e-3, scale_x = True,
                 maxstep = 50, trace = True)
 ```
+<br />
+<br />
+<br />
 #### spls
 *Sparse partial least squares*
 ##### Description
