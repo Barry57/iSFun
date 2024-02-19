@@ -17,6 +17,10 @@ setuptools==68.2.2<br />
 ```c
 pip install iSFun
 ```
+Or using mirror:
+```c
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple iSFun
+```
 ## Functions
 ### Menu
 - [cca_data](#cca_data)
