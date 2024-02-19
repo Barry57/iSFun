@@ -21,6 +21,10 @@ pip install iSFun
 ### Menu
 - [iscca](#iscca)
 - [iscca_cv](#iscca_cv)
+- [iscca_plot](#iscca_plot)
+- [ispca](#ispca)
+- [ispca_cv](#ispca_cv)
+- [ispca_plot](#ispca_plot)
 - 
 -
 -
@@ -38,43 +42,38 @@ pip install iSFun
 -
 -
 -
--
--
--
--
 #### iscca
-Integrative sparse canonical correlation analysis.
+*Integrative sparse canonical correlation analysis*
 ##### Description
 This function provides a penalty-based integrative sparse canonical correlation analysis method to handle the multiple datasets with high dimensions generated under similar protocols, which consists of two built-in penalty items for selecting the important variables for users to choose, and two contrasted penalty functions for eliminating the diffierence (magnitude or sign) between estimators within each group.
 ##### Usage
 ```c
-iscca(x, y, L, mu1, mu2, mu3, mu4, eps=1e-04, pen1="homogeneity", 
-          pen2="magnitude", scale_x=True, scale_y=True, maxstep=50, 
-          submaxstep=10, trace=False, draw=False):
+iscca(x, y, L, mu1, mu2, mu3, mu4, eps=1e-04, pen1="homogeneity", pen2="magnitude",
+      scale_x=True, scale_y=True, maxstep=50, submaxstep=10, trace=False, draw=False)
 ```
 ##### Arguments
 |Arguments|Description|
 |:---:|:---:|
-|x|list of data matrices, L datasets of explanatory variables.|
-|y|list of data matrices, L datasets of dependent variables.|
-L|numeric, number of datasets.|
-mu1|numeric, sparsity penalty parameter for vector u.|
-mu2|numeric, contrasted penalty parameter for vector u.|
-mu3|numeric, sparsity penalty parameter for vector v.|
-mu4|numeric, contrasted penalty parameter for vector v.|
-eps|numeric, the threshold at which the algorithm terminates.|
-pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.|
-pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.|
-scale_x|character, "TRUE" or "FALSE", whether or not to scale the variables x. The default is TRUE.|
-scale_y|character, "TRUE" or "FALSE", whether or not to scale the variables y. The default is TRUE.|
-maxstep|numeric, maximum iteration steps. The default value is 50.|
-submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.|
-trace|character, "TRUE" or "FALSE". If TRUE, prints out its screening results of variables.|
-draw|character, "TRUE" or "FALSE". If TRUE, plot the convergence path of loadings and the heatmap of coefficient beta.|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter for vector u.
+mu2|numeric, contrasted penalty parameter for vector u.
+mu3|numeric, sparsity penalty parameter for vector v.
+mu4|numeric, contrasted penalty parameter for vector v.
+eps|numeric, the threshold at which the algorithm terminates.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+draw|character, "True" or "False". If True, plot the convergence path of loadings and the heatmap of coefficient beta.
 ##### Value
 An 'iscca' object that contains the list of the following items.
-- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is TRUE, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
-- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is TRUE, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
 - loading_x: the estimated canonical vector of variables x.
 - loading_y: the estimated canonical vector of variables y.
 - variable_x: the screening results of variables x.
@@ -92,22 +91,441 @@ from isfun import iscca
 x = cca_data()['x']
 y = cca_data()['y']
 L = len(x)
+
 mu1 = mu3 = 0.4
 mu2 = mu4 = 2.5
 res_homo_m = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
                    eps = 5e-2, maxstep = 50, submaxstep = 10, trace = True, draw = True)
 res_homo_s = iscca(x=x, y=y, L=L, mu1=mu1, mu2=mu2, mu3=mu3, mu4=mu4,
-                    eps=5e-2, pen1="homogeneity", pen2="sign", scale_x=True,
-                    scale_y=True, maxstep=50, submaxstep=10, trace=False, draw=False)
+                   eps=5e-2, pen1="homogeneity", pen2="sign", scale_x=True,
+                   scale_y=True, maxstep=50, submaxstep=10, trace=False, draw=False)
 
 mu1 = mu3 = 0.3
 mu2 = mu4 = 2
 res_hete_m = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
-                    eps = 5e-2, pen1 = "heterogeneity", pen2 = "magnitude", scale_x = True,
-                    scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
+                   eps = 5e-2, pen1 = "heterogeneity", pen2 = "magnitude", scale_x = True,
+                   scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
 res_hete_s = iscca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
-                    eps = 5e-2, pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
-                    scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
+                   eps = 5e-2, pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
+                   scale_y = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
 ```
 #### iscca_cv
+*Cross-validation for iscca*
+##### Description
+Performs K-fold cross validation for the integrative sparse canonical correlation analysis over a grid of values for the regularization parameter mu1, mu2, mu3 and mu4.
+##### Usage
+```c
+iscca_cv(x, y, L, mu1, mu2, mu3, mu4, K=5, eps=1e-04, pen1="homogeneity", pen2="magnitude",
+         scale_x=True, scale_y=True, maxstep=50, submaxstep=10)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+K|numeric, number of cross-validation folds. Default is 5.
+mu1|numeric, sparsity penalty parameter for vector u.
+mu2|numeric, contrasted penalty parameter for vector u.
+mu3|numeric, sparsity penalty parameter for vector v.
+mu4|numeric, contrasted penalty parameter for vector v.
+eps|numeric, the threshold at which the algorithm terminates.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+##### Value
+An 'iscca_cv' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- mu1: the sparsity penalty parameter selected from the feasible set of parameter mu1 provided by users.
+- mu2: the contrasted penalty parameter selected from the feasible set of parameter mu2 provided by users.
+- mu3: the sparsity penalty parameter selected from the feasible set of parameter mu3 provided by users.
+- mu4: the contrasted penalty parameter selected from the feasible set of parameter mu4 provided by users.
+- fold: The fold assignments for cross-validation for each observation.
+- loading_x: the estimated canonical vector of variables x with selected tuning parameters.
+- loading_y: the estimated canonical vector of variables y with selected tuning parameters.
+- variable_x: the screening results of variables x.
+- variable_y: the screening results of variables y.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### See Also
+See Also as [iscca](#iscca).
+##### Examples
+```c
+from isfun_data import cca_data
+from isfun import iscca_cv
+x = cca_data()['x']
+y = cca_data()['y']
+L = len(x)
+
+mu1 = [0.2, 0.4]
+mu3 = 0.4
+mu2 = mu4 = 2.5
+res_homo_m = iscca_cv(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4, K = 5,
+                      eps = 1e-2, pen1="homogeneity", pen2="magnitude", scale_x=True,
+                      scale_y = True, maxstep = 50, submaxstep = 10)
+res_homo_s = iscca_cv(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4, K = 5, 
+                      eps = 1e-2, pen1 = "homogeneity", pen2 = "sign", scale_x = True,
+                      scale_y = True, maxstep = 50, submaxstep = 10)
+
+mu1 = mu3 = [0.1, 0.3]
+mu2 = mu4 = 2
+res_hete_m = iscca_cv(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4, K = 5,
+                      eps = 1e-2, pen1 = "heterogeneity", pen2 = "magnitude", scale_x = True,
+                      scale_y = True, maxstep = 50, submaxstep = 10)
+res_hete_s = iscca_cv(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4, K = 5,
+                      eps = 1e-2, pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
+                      scale_y = True, maxstep = 50, submaxstep = 10)
+```
+#### iscca_plot
+*Plot the results of iscca*
+##### Description
+Plot the convergence path graph in the integrative sparse canonical correlation analysis method or show the the first pair of canonical vectors.
+##### Usage
+```c
+iscca_plot(x, type)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of "iscca", which is the result of command "iscca".
+type|character, "path" or "loading" type, if "path", plot the the convergence path graph of vector u and v in the integrative sparse canonical correlation analysis method, if "loading", show the the first pair of canonical vectors.
+##### Details
+See details in [iscca](#iscca).
+##### Value
+The convergence path graph or the scatter diagrams of the first pair of canonical vectors.
+##### Examples
+```c
+from isfun_data import cca_data
+from isfun import iscca
+from isfun import iscca_plot
+x = cca_data()['x']
+y = cca_data()['y']
+L = len(x)
+
+mu1 = mu3 = 0.4
+mu2 = mu4 = 2.5
+res_homo_m = iscca(x=x, y=y, L=L, mu1 = mu1, mu2 = mu2, mu3 = mu3, mu4 = mu4,
+                   eps = 5e-2, maxstep = 100, trace = False, draw = False)
+iscca_plot(x = res_homo_m, type = "path")
+iscca_plot(x = res_homo_m, type = "loading")
+```
+#### ispca
+*Integrative sparse principal component analysis*
+##### Description
+This function provides a penalty-based integrative sparse principal component analysis method to obtain the direction of first principal component of the multiple datasets with high dimensions generated under similar protocols, which consists of two built-in penalty items for selecting the important variables for users to choose, and two contrasted penalty functions for eliminating the diffierence (magnitude or sign) between estimators within each group.
+##### Usage
+```c
+ispca(x, L, mu1, mu2, eps = 1e-04, pen1 = "homogeneity", pen2 = "magnitude",
+      scale_x = True, maxstep = 50, submaxstep = 10, trace = False, draw = False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter.
+mu2|numeric, contrasted penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+draw|character, "True" or "False". If True, plot the convergence path of loadings and the heatmap of coefficient beta.
+##### Value
+An 'ispca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- eigenvalue: the estimated first eigenvalue.
+- eigenvector: the estimated first eigenvector.
+- component: the estimated first component.
+- variable: the screening results of variables.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+##### References
+Fang K, Fan X, Zhang Q, et al. Integrative sparse principal component analysis[J]. Journal of Multivariate Analysis, 2018, 166: 1-16.
+##### See Also
+See Also as [preview_pca](#preview_pca), [ispca_cv](#ispca_cv), [meta_spca](#meta_spca), [spca](#spca).
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import ispca
+x = pca_data()['x']
+L = len(x)
+
+res_homo_m = ispca(x = x, L = L, mu1 = 0.5, mu2 = 0.002, trace = True, draw = True)
+res_homo_s = ispca(x = x, L = L, mu1 = 0.5, mu2 = 0.002,
+                   pen1 = "homogeneity", pen2 = "sign", scale_x = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+
+res_hete_m = ispca(x = x, L = L, mu1 = 0.1, mu2 = 0.05,
+                   pen1 = "heterogeneity", pen2 = "magnitude", scale_x = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+res_hete_s = ispca(x = x, L = L, mu1 = 0.1, mu2 = 0.05,
+                   pen1 = "heterogeneity", pen2 = "sign", scale_x = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+```
+#### ispca_cv
+*Cross-validation for ispca*
+##### Description
+Performs K-fold cross validation for the integrative sparse principal component analysis over a grid of values for the regularization parameter mu1 and mu2.
+##### Usage
+```c
+ispca_cv(x, L, mu1, mu2, K = 5, eps = 1e-04, pen1 = "homogeneity", 
+         pen2 = "magnitude", scale_x = True, maxstep = 50, submaxstep = 10)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+L|numeric, number of datasets.
+K|numeric, number of cross-validation folds. Default is 5.
+mu1|numeric, sparsity penalty parameter.
+mu2|numeric, contrasted penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+##### Value
+An 'ispca_cv' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- mu1: the sparsity penalty parameter selected from the feasible set of parameter mu1 provided by users.
+- mu2: the contrasted penalty parameter selected from the feasible set of parameter mu2 provided by users.
+- fold: The fold assignments for cross-validation for each observation.
+- eigenvalue: the estimated first eigenvalue with selected tuning parameters mu1 and mu2.
+- eigenvector: the estimated first eigenvector with selected tuning parameters mu1 and mu2.
+- component: the estimated first component with selected tuning parameters mu1 and mu2.
+- variable: the screening results of variables.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+##### References
+Fang K, Fan X, Zhang Q, et al. Integrative sparse principal component analysis[J]. Journal of Multivariate Analysis, 2018, 166: 1-16.
+##### See Also
+See Also as [ispca](#ispca).
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import ispca_cv
+x = pca_data()['x']
+L = len(x)
+
+mu1 = [0.3, 0.5]
+mu2 = 0.002
+res_homo_m = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "homogeneity", K = 5,
+                      pen2 = "magnitude", scale_x = True, maxstep = 50, submaxstep = 10)
+res_homo_s = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "homogeneity", K = 5,
+                      pen2 = "sign", scale_x = True, maxstep = 50, submaxstep = 10)
+
+mu1 = [0.1, 0.15]
+mu2 = 0.05
+res_hete_m = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "heterogeneity", K = 5,
+                       pen2 = "magnitude", scale_x = True, maxstep = 50, submaxstep = 10)
+res_hete_s = ispca_cv(x = x, L = L, mu1 = mu1, mu2 = mu2, pen1 = "heterogeneity", K = 5,
+                       pen2 = "sign", scale_x = True, maxstep = 50, submaxstep = 10)
+```
+#### ispca_plot
+*Plot the results of ispca*
+##### Description
+Plot the convergence path graph or estimated value of the first eigenvector u in the integrative sparse principal component analysis method.
+##### Usage
+```c
+ispca_plot(x, type)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of "ispca", which is the result of command "ispca".
+type|character, "path" or "loading" type, if "path", plot the the convergence path graph of vector u and v in the integrative sparse canonical correlation analysis method, if "loading", show the the first pair of canonical vectors.
+##### Details
+See details in [ispca](#ispca).
+##### Value
+The convergence path graph or the scatter diagrams of the first eigenvector u.
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import ispca
+from isfun import ispca_plot
+x = pca_data()['x']
+L = len(x)
+
+res_homo_m = ispca(x=x, L=L, mu1 = 0.5, mu2 = 0.002, trace = False, draw = False)
+ispca_plot(x = res_homo_m, type = "path")
+ispca_plot(x = res_homo_m, type = "loading")
+```
+#### ispls
+*Integrative sparse partial least squares*
+##### Description
+This function provides a penalty-based integrative sparse partial least squares method to handle the multiple datasets with high dimensions generated under similar protocols, which consists of two built-in penalty items for selecting the important variables for users to choose, and two contrasted penalty functions for eliminating the diffierence (magnitude or sign) between estimators within each group.
+##### Usage
+```c
+ispls(x, y, L, mu1, mu2, eps=1e-04, kappa=0.05, pen1="homogeneity", pen2="magnitude",
+      scale_x=True, scale_y=True, maxstep=50, submaxstep=10, trace=False, draw=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter
+mu2|numeric, contrasted penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+kappa|numeric, 0 < kappa < 0.5 and the parameter reduces the effect of the concave part of objective function.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+draw|character, "True" or "False". If True, plot the convergence path of loadings and the heatmap of coefficient beta.
+##### Value
+An 'ispls' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- betahat: the estimated regression coefficients.
+- loading: the estimated first direction vector.
+- variable: the screening results of variables x.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### References
+Liang W, Ma S, Zhang Q, et al. Integrative sparse partial least squares[J]. Statistics in Medicine, 2021, 40(9): 2239-2256.
+##### See Also
+See Also as [preview_pls](#preview_pls), [ispls_cv](#ispls_cv), [meta_scca](#meta_spls), [scca](#spls).
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import ispls
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+res_homo_m = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
+                   eps = 5e-2, trace = True, draw = True)
+res_homo_s = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
+                   eps = 5e-2, kappa = 0.05, pen1 = "homogeneity",
+                   pen2 = "sign", scale_x = True, scale_y = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+
+res_hete_m = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
+                   eps = 5e-2, kappa = 0.05, pen1 = "heterogeneity",
+                   pen2 = "magnitude", scale_x = True, scale_y = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+res_hete_s = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
+                   eps = 5e-2, kappa = 0.05, pen1 = "heterogeneity",
+                   pen2 = "sign", scale_x = True, scale_y = True,
+                   maxstep = 50, submaxstep = 10, trace = False, draw = False)
+```
+#### ispls_cv
+*Cross-validation for ispls*
+##### Description
+Performs K-fold cross validation for the integrative sparse partial least squares over a grid of values for the regularization parameter mu1 and mu2.
+##### Usage
+```c
+ispls_cv(x, y, L, K, mu1, mu2, eps=1e-04, kappa=0.05, pen1="homogeneity", 
+         pen2="magnitude", scale_x=True, scale_y=True, maxstep=50, submaxstep=10)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+K|numeric, number of cross-validation folds. Default is 5.
+mu1|numeric, sparsity penalty parameter
+mu2|numeric, contrasted penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+kappa|numeric, 0 < kappa < 0.5 and the parameter reduces the effect of the concave part of objective function.
+pen1|character, "homogeneity" or "heterogeneity" type of the sparsity structure. If not specified, the default is homogeneity.
+pen2|character, "magnitude" or "sign" based contrasted penalty. If not specified, the default is magnitude.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+submaxstep|numeric, maximum iteration steps in the sub-iterations. The default value is 10.
+##### Value
+An 'ispls_cv' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- mu1: the sparsity penalty parameter selected from the feasible set of parameter mu1 provided
+by users.
+- mu2: the contrasted penalty parameter selected from the feasible set of parameter mu2 provided by users.
+- fold: The fold assignments for cross-validation for each observation.
+- betahat: the estimated regression coefficients with selected tuning parameters mu1 and mu2.
+- loading: the estimated first direction vector with selected tuning parameters mu1 and mu2.
+- variable: the screening results of variables x.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### References
+Liang W, Ma S, Zhang Q, et al. Integrative sparse partial least squares[J]. Statistics in Medicine, 2021, 40(9): 2239-2256.
+##### See Also
+See Also as [ispls](#ispls).
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import ispls_cv
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+mu1 = [0.04, 0.05]
+mu2 = 0.25
+res_homo_m = ispls_cv(x = x, y = y, L = L, K = 5, mu1 = mu1, mu2 = mu2, eps = 1e-2,
+                      kappa = 0.05, pen1 = "homogeneity", pen2 = "magnitude",
+                      scale_x = True, scale_y = True, maxstep = 50, submaxstep = 10)
+res_homo_s = ispls_cv(x = x, y = y, L = L, K = 5, mu1 = mu1, mu2 = mu2, eps = 1e-2,
+                      kappa = 0.05, pen1 = "homogeneity", pen2 = "sign",
+                      scale_x = True, scale_y = True, maxstep = 50, submaxstep = 10)
+
+res_hete_m = ispls_cv(x = x, y = y, L = L, K = 5, mu1 = mu1, mu2 = mu2, eps = 1e-2,
+                      kappa = 0.05, pen1 = "heterogeneity", pen2 = "magnitude",
+                      scale_x = True, scale_y = True, maxstep = 50, submaxstep = 10)
+res_hete_s = ispls_cv(x = x, y = y, L = L, K = 5, mu1 = mu1, mu2 = mu2, eps = 1e-2,
+                      kappa = 0.05, pen1 = "heterogeneity", pen2 = "sign",
+                      scale_x = True, scale_y = True, maxstep = 50, submaxstep = 10)
+```
+#### ispls_plot
+*Plot the results of ispls*
+##### Description
+Plot the convergence path graph of the first direction vector w in the integrative sparse partial least squares model or show the regression coefficients.
+##### Usage
+```c
+ispls_plot(x, type)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of "ispls", which is the result of command "ispls".
+type|character, "path", "loading" or "heatmap" type, if "path", plot the the convergence path graph of vector w in the integrative sparse partial least squares model,if "loading", plot the the first direction vectors, if "heatmap", show the heatmap of regression coefficients among different datasets.
+##### Details
+See details in [ispls](#ispls).
+##### Value
+Show the convergence path graph of the first direction vector w or the regression coefficients.
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import ispls
+from isfun import ispls_plot
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+res_homo_m = ispls(x = x, y = y, L = L, mu1 = 0.05, mu2 = 0.25,
+                    eps = 5e-2, trace = False, draw = False)
+ispls_plot(x = res_homo_m, type = "path")
+ispls_plot(x = res_homo_m, type = "loading")
+ispls_plot(x = res_homo_m, type = "heatmap")
+```
+
 
