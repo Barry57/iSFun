@@ -401,7 +401,7 @@ An 'ispls' object that contains the list of the following items.
 ##### References
 Liang W, Ma S, Zhang Q, et al. Integrative sparse partial least squares[J]. Statistics in Medicine, 2021, 40(9): 2239-2256.
 ##### See Also
-See Also as [preview_pls](#preview_pls), [ispls_cv](#ispls_cv), [meta_scca](#meta_spls), [scca](#spls).
+See Also as [preview_pls](#preview_pls), [ispls_cv](#ispls_cv), [meta_spls](#meta_spls), [spls](#spls).
 ##### Examples
 ```c
 from isfun_data import pls_data
@@ -527,5 +527,377 @@ ispls_plot(x = res_homo_m, type = "path")
 ispls_plot(x = res_homo_m, type = "loading")
 ispls_plot(x = res_homo_m, type = "heatmap")
 ```
+#### meta_scca
+*Meta-analytic sparse canonical correlation analysis method in integrative study*
+##### Description
+This function provides penalty-based sparse canonical correlation meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics S.
+##### Usage
+```c
+meta_scca(x, y, L, mu1, mu2, eps=1e-04, scale_x=True, scale_y=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter for vector u.
+mu2|numeric, sparsity penalty parameter for vector v.
+eps|numeric, the threshold at which the algorithm terminates.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_scca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- loading_x: the estimated canonical vector of variables x.
+- loading_y: the estimated canonical vector of variables y.
+- variable_x: the screening results of variables x.
+- variable_y: the screening results of variables y.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### References
+Cichonska A, Rousu J, Marttinen P, et al. metaCCA: summary statistics-based multivariate meta-analysis of genome-wide association studies using canonical correlation analysis[J]. Bioinformatics, 2016, 32(13): 1981-1989.
+##### See Also
+See Also as [iscca](#iscca), [scca](#scca).
+##### Examples
+```c
+from isfun_data import cca_data
+from isfun import meta_scca
+x = cca_data()['x']
+y = cca_data()['y']
+L = len(x)
 
+mu1 = 0.08
+mu2 = 0.08
+res = meta_scca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, trace = True)
+```
+#### meta_spca
+*Meta-analytic sparse principal component analysis method in integrative study*
+##### Description
+This function provides penalty-based sparse principal component meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics S.
+##### Usage
+```c
+meta_spca(x, L, mu1, eps=1e-04, scale_x=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_spca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- eigenvalue: the estimated first eigenvalue.
+- eigenvector: the estimated first eigenvector.
+- component: the estimated first component.
+- variable: the screening results of variables.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+##### References
+Kim S H, Kang D, Huo Z, et al. Meta-analytic principal component analysis in integrative omics application[J]. Bioinformatics, 2018, 34(8): 1321-1328.
+##### See Also
+See Also as [ispca](#ispca), [spca](#spca).
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import meta_spca
+x = pca_data()['x']
+L = len(x)
 
+res = meta_spca(x = x, L = L, mu1 = 0.5, trace = True)
+```
+#### meta_spls
+*Meta-analytic sparse partial least squares method in integrative study*
+##### Description
+This function provides penalty-based sparse canonical correlation meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics.
+##### Usage
+```c
+meta_spls(x, y, L, mu1, eps=1e-04, kappa=0.05, scale_x=True, scale_y=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter
+eps|numeric, the threshold at which the algorithm terminates.
+kappa|numeric, 0 < kappa < 0.5 and the parameter reduces the effect of the concave part of objective function.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_spls' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- betahat: the estimated regression coefficients.
+- loading: the estimated first direction vector.
+- variable: the screening results of variables x.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### See Also
+See Also as [ispls](#ispls), [spls](#spls).
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import meta_spls
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+res = meta_spls(x = x, y = y, L = L, mu1 = 0.03, trace = True)
+```
+#### preview_cca
+*Statistical description before using function iscca*
+##### Description
+The function describes the basic statistical information of the data, including sample mean, sample variance of X and Y, and the first pair of canonical vectors.
+##### Usage
+```c
+preview_cca(x, y, L, scale_x=True, scale_y=True)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+##### Value
+An 'preview_cca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- loading_x: the estimated canonical vector of variables x.
+- loading_y: the estimated canonical vector of variables y.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### See Also
+See Also as [iscca](#iscca).
+##### Examples
+```c
+from isfun_data import cca_data
+from isfun import preview_cca
+x = cca_data()['x']
+y = cca_data()['y']
+L = len(x)
+
+prev_cca = preview_cca(x = x, y = y, L = L, scale_x = True, scale_y = True)
+```
+#### meta_spca
+*Statistical description before using function ispca*
+##### Description
+The function describes the basic statistical information of the data, including sample mean, sample co-variance of X and Y, the first eigenvector, eigenvalue and principal component, etc.
+##### Usage
+```c
+preview_pca(x, L, scale_x=True)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+L|numeric, number of datasets.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+##### Value
+An 'preview_pca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- eigenvalue: the estimated first eigenvalue.
+- eigenvector: the estimated first eigenvector.
+- component: the estimated first component.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+##### See Also
+See Also as [ispca](#ispca).
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import preview_pca
+x = pca_data()['x']
+L = len(x)
+
+prev_pca = preview_pca(x = x, L = L, scale_x = True)
+```
+#### meta_spls
+*Statistical description before using function ispls*
+##### Description
+The function describes the basic statistical information of the data, including sample mean, sample variance of X and Y, the first direction of partial least squares method, etc.
+##### Usage
+```c
+preview_pls(x, y, L, scale_x=True, scale_y=True)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+##### Value
+An 'preview_pls' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- loading: the estimated first direction vector.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### See Also
+See Also as [ispls](#ispls).
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import preview_pls
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+prev_pls = preview_pls(x = x, y = y, L = L, scale_x = True, scale_y = True)
+```
+#### scca
+*Meta-analytic sparse canonical correlation analysis method in integrative study*
+##### Description
+This function provides penalty-based sparse canonical correlation meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics S.
+##### Usage
+```c
+meta_scca(x, y, L, mu1, mu2, eps=1e-04, scale_x=True, scale_y=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter for vector u.
+mu2|numeric, sparsity penalty parameter for vector v.
+eps|numeric, the threshold at which the algorithm terminates.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_scca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- loading_x: the estimated canonical vector of variables x.
+- loading_y: the estimated canonical vector of variables y.
+- variable_x: the screening results of variables x.
+- variable_y: the screening results of variables y.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### References
+Cichonska A, Rousu J, Marttinen P, et al. metaCCA: summary statistics-based multivariate meta-analysis of genome-wide association studies using canonical correlation analysis[J]. Bioinformatics, 2016, 32(13): 1981-1989.
+##### See Also
+See Also as [iscca](#iscca), [scca](#scca).
+##### Examples
+```c
+from isfun_data import cca_data
+from isfun import meta_scca
+x = cca_data()['x']
+y = cca_data()['y']
+L = len(x)
+
+mu1 = 0.08
+mu2 = 0.08
+res = meta_scca(x = x, y = y, L = L, mu1 = mu1, mu2 = mu2, trace = True)
+```
+#### meta_spca
+*Meta-analytic sparse principal component analysis method in integrative study*
+##### Description
+This function provides penalty-based sparse principal component meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics S.
+##### Usage
+```c
+meta_spca(x, L, mu1, eps=1e-04, scale_x=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter.
+eps|numeric, the threshold at which the algorithm terminates.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_spca' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- eigenvalue: the estimated first eigenvalue.
+- eigenvector: the estimated first eigenvector.
+- component: the estimated first component.
+- variable: the screening results of variables.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+##### References
+Kim S H, Kang D, Huo Z, et al. Meta-analytic principal component analysis in integrative omics application[J]. Bioinformatics, 2018, 34(8): 1321-1328.
+##### See Also
+See Also as [ispca](#ispca), [spca](#spca).
+##### Examples
+```c
+from isfun_data import pca_data
+from isfun import meta_spca
+x = pca_data()['x']
+L = len(x)
+
+res = meta_spca(x = x, L = L, mu1 = 0.5, trace = True)
+```
+#### meta_spls
+*Meta-analytic sparse partial least squares method in integrative study*
+##### Description
+This function provides penalty-based sparse canonical correlation meta-analytic method to handle the multiple datasets with high dimensions generated under similar protocols, which is based on the principle of maximizing the summary statistics.
+##### Usage
+```c
+meta_spls(x, y, L, mu1, eps=1e-04, kappa=0.05, scale_x=True, scale_y=True, maxstep=50, trace=False)
+```
+##### Arguments
+|Arguments|Description|
+|:---:|:---:|
+x|list of data matrices, L datasets of explanatory variables.
+y|list of data matrices, L datasets of dependent variables.
+L|numeric, number of datasets.
+mu1|numeric, sparsity penalty parameter
+eps|numeric, the threshold at which the algorithm terminates.
+kappa|numeric, 0 < kappa < 0.5 and the parameter reduces the effect of the concave part of objective function.
+scale_x|character, "True" or "False", whether or not to scale the variables x. The default is True.
+scale_y|character, "True" or "False", whether or not to scale the variables y. The default is True.
+maxstep|numeric, maximum iteration steps. The default value is 50.
+trace|character, "True" or "False". If True, prints out its screening results of variables.
+##### Value
+An 'meta_spls' object that contains the list of the following items.
+- x: list of data matrices, L datasets of explanatory variables with centered columns. If scale_x is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- y: list of data matrices, L datasets of dependent variables with centered columns. If scale_y is True, the columns of L datasets are standardized to have mean 0 and standard deviation 1.
+- betahat: the estimated regression coefficients.
+- loading: the estimated first direction vector.
+- variable: the screening results of variables x.
+- meanx: list of numeric vectors, column mean of the original datasets x.
+- normx: list of numeric vectors, column standard deviation of the original datasets x.
+- meany: list of numeric vectors, column mean of the original datasets y.
+- normy: list of numeric vectors, column standard deviation of the original datasets y.
+##### See Also
+See Also as [ispls](#ispls), [spls](#spls).
+##### Examples
+```c
+from isfun_data import pls_data
+from isfun import meta_spls
+x = pls_data()['x']
+y = pls_data()['y']
+L = len(x)
+
+res = meta_spls(x = x, y = y, L = L, mu1 = 0.03, trace = True)
+```
